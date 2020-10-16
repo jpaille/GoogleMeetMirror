@@ -21,8 +21,7 @@ function initFlip() {
     // store my cam video id
     videos = document.querySelectorAll('video');
     main_video = videos[videos.length -1];
-    main_video_class_list = main_video.classList;
-    my_video_id = main_video_class_list[main_video_class_list.length - 1]
+    my_video_id = main_video.parentElement.dataset['ssrc']
     // flip all my videos, there can be several stream of my cam on the room (thumbnail view on the top right corner))
     if (window.camIsFlipped) {
         flipVideos()
@@ -42,7 +41,7 @@ function flipVideos() {
         videos = document.querySelectorAll(`video`);
     }
     else if (page == "MEETING") {
-        videos = document.querySelectorAll(`.${my_video_id}`);        
+        videos = document.querySelectorAll(`div[data-ssrc="${my_video_id}"]`);
     }
     videos.forEach(flipVideo);
 }
@@ -57,7 +56,7 @@ function unflipVideos() {
         videos = document.querySelectorAll(`video`);
     }
     else if (page == "MEETING") {
-        videos = document.querySelectorAll(`.${my_video_id}`);        
+        videos = document.querySelectorAll(`div[data-ssrc="${my_video_id}"]`);
     }
     videos.forEach(unflipVideo);
 }
@@ -90,9 +89,12 @@ function waitForElement(selector) {
 
 function flipIfMyVideoAndFlipActivated(video)
 {
-    if (video.classList.contains(my_video_id) && window.camIsFlipped)
+    if (video.parentElement.dataset["ssrc"] == my_video_id && window.camIsFlipped)
     {
-        flipVideo(video);        
+        flipVideo(video);
+    }
+    else {
+        unflipVideo(video); // handle strange case of people starting screensharing after the meeting has started.
     }
 }
 
