@@ -13,7 +13,7 @@ waitForElement('[data-allocation-index="0"]').then(function(element) {
     // data-allocation-index is used to identify the actual meeting room 
     // juste after a user press the button "go to meeting".
     page = "MEETING"
-    setTimeout(function() { initFlip(); }, 2000);
+    setTimeout(function() { initFlip(); }, 500);
     // 2 seconds of delay to let google javascript to fully load the room page.
 });
 
@@ -102,7 +102,7 @@ function startMutationObserver() {
     let observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             Array.from(mutation.addedNodes).filter(function(addedNode) { return addedNode.nodeName == 'VIDEO' }).forEach(function(addedNode) {
-                   setTimeout(function() { flipIfMyVideoAndFlipActivated(addedNode); }, 2000); 
+                   setTimeout(function() { flipIfMyVideoAndFlipActivated(addedNode); }, 500); 
             });
         });
     });
