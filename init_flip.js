@@ -31,6 +31,27 @@ function initFlip() {
     startMutationObserver()
 }
 
+function checkVideos(video) {
+    // check all is flipped in the right way
+    // this is useful when people are screensharing several times.
+    videos = document.querySelectorAll(`div[data-ssrc`);
+    var i;
+    for (i = 0; i < videos.length; i++) {
+        if (videos[i].dataset['ssrc'] == my_video_id) {
+	 if (window.camIsFlipped) {
+	     videos[i].style.transform = 'ScaleX(-1)';
+	 }
+	 else {
+	     videos[i].style.transform = 'ScaleX(1)';
+	 }
+        }
+        else
+        {
+	 videos[i].style.transform = 'ScaleX(1)'
+        }
+    }
+}
+
 function flipVideo(video) {
     div = video.closest('div');
     div.style.transform = 'ScaleX(-1)';
@@ -89,19 +110,21 @@ function waitForElement(selector) {
 
 function flipIfMyVideoAndFlipActivated(video)
 {
-    if (video.parentElement.dataset["ssrc"] == my_video_id && window.camIsFlipped)
+    if (video.parentElement.dataset["ssrc"] == my_video_id && window.camIsFlipped )
     {
         flipVideo(video);
     }
     else {
         unflipVideo(video); // handle strange case of people starting screensharing after the meeting has started.
     }
+    checkVideos()
 }
 
 function startMutationObserver() {
     let observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-            Array.from(mutation.addedNodes).filter(function(addedNode) { return addedNode.nodeName == 'VIDEO' }).forEach(function(addedNode) {
+            Array.from(mutation.addedNodes).filter(function(addedNode) {
+	     return addedNode.nodeName == 'VIDEO' }).forEach(function(addedNode) {
                    setTimeout(function() { flipIfMyVideoAndFlipActivated(addedNode); }, 500); 
             });
         });

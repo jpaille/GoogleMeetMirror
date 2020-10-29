@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
- "name": "FlipMyCam",
+  "name": "Google Meet Mirror / Flip Camera",
   "description": "Adds a toggle to flip Google Meet camera image, Flip camera to match what others really see.",
   "version": "1.0.2",
   "author": "Julien Paille",
@@ -22,7 +22,7 @@
         "128": "icon128.png"
     },
     "default_popup": "popup.html",
-    "default_title": "FlipMyCam: Flip camera to match what others see"
+    "default_title": "Google Meet Mirror : Flip camera to match what others see"
   },
  "content_scripts": [
    {
@@ -31,7 +31,6 @@
    }
  ],
     "permissions": [
-        "tabs",
         "activeTab",
         "declarativeContent"
     ]

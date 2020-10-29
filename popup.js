@@ -3,7 +3,7 @@
 
     window.activated = new Array();
 
-    const flipMessage = 'FlipMyCam - My cam is not flipped';
+    const flipMessage = 'Google Meet Mirror - My cam is not flipped';
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.executeScript(
@@ -14,7 +14,7 @@
         chrome.pageAction.getTitle({ tabId: tabs[0].id }, (title) => {
             chrome.pageAction.setTitle({
                 tabId: tabs[0].id,
-                title: (title == flipMessage) ? 'FlipMyCam - FlipMyCam - My cam is flipped' : flipMessage
+                title: (title == flipMessage) ? 'Google Meet Mirror - My cam is flipped' : flipMessage
             });
 
             window.close();
